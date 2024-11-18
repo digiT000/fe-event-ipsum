@@ -15,8 +15,8 @@ import Header from "@/components/Header";
 import { useRouter } from "next/router";
 
 function TransactionHistory() {
-  const authHandler = new AuthHandler();
   // Check if the user already login or not
+  const router = useRouter();
   const isInitialRender = useRef<boolean>(true); // Check if its already be render or not
   const userToken = Cookies.get(`access${UniqueCode.USER}_token`);
   const bookingHandler = new BookingHandler();
@@ -77,7 +77,6 @@ function TransactionHistory() {
 
   // InitialRender
   useEffect(() => {
-    const router = useRouter();
     const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
     const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
     // Check the status of render

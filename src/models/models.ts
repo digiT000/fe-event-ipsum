@@ -1,5 +1,3 @@
-import TransactionHistory from "@/pages/user/transaction-history";
-
 export interface LoginAuth {
   email: string;
   password: string;

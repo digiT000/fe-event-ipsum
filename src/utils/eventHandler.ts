@@ -11,7 +11,7 @@ export class EventHandlerApi {
 
       return { data, cursor };
     } catch (error) {
-      return { data: [], cursor: 0 as number }; // Return empty array for error handling
+      return { data: [], cursor: 0 as number, message: error }; // Return empty array for error handling
     }
   }
 

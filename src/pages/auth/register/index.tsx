@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 // Import useRouter from next/router
 
 function RegisterPage() {
+  const router = useRouter();
   const authHandler = new AuthHandler();
   // Check if the user already login or not
 
@@ -119,7 +120,6 @@ function RegisterPage() {
   }, [formData.email, formData.password, formData.name]);
 
   useEffect(() => {
-    const router = useRouter();
     // Check if user is already logged in
     const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
     const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);

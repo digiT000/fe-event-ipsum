@@ -52,7 +52,11 @@ function NavigationBar({
       setLoading(true);
       const response = await authHandler.validateUserToken(userToken);
       // Check if the response true
-      response ? userLogin(response) : userLogin(null);
+      if (response) {
+        userLogin(response);
+      } else {
+        userLogin(null);
+      }
       setLoading(false);
     } catch (error) {
       return error;
@@ -66,7 +70,11 @@ function NavigationBar({
       const response = await authHandler.refreshUserAcessToken(refreshToken);
 
       // Check if the response true
-      response ? userLogin(response) : userLogin(null);
+      if (response) {
+        userLogin(response);
+      } else {
+        userLogin(null);
+      }
       setLoading(false);
     } catch (error) {
       return error;
@@ -83,9 +91,11 @@ function NavigationBar({
       // Check if the user already has a refresh token
       if (refreshToken) {
         // Check the availability of the access token
-        userToken
-          ? handleFethingUserData(userToken)
-          : refreshUserAcessToken(refreshToken);
+        if (userToken) {
+          handleFethingUserData(userToken);
+        } else {
+          refreshUserAcessToken(refreshToken);
+        }
       } else {
         setLoading(false);
 

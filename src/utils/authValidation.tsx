@@ -1,8 +1,6 @@
 import { LoginAuth, RegisterForm, ReviewData } from "@/models/models";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { UniqueCode } from "@/models/models";
 
 export class AuthHandler {
@@ -189,6 +187,7 @@ export class AuthHandler {
       Cookies.remove(`refresh${UniqueCode.USER}_token`);
       Cookies.remove(`access${UniqueCode.ADMIN}_token`);
       Cookies.remove(`refresh${UniqueCode.ADMIN}_token`);
+      return error;
     }
   }
 }

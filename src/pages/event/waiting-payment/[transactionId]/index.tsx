@@ -105,7 +105,7 @@ function WaitingPaymentPage() {
       });
 
       // Display a user-friendly error message
-      alert("An unexpected error occurred. Please try again later.");
+      alert(`An unexpected error occurred. Please try again later. ${error}`);
     }
   }
 
