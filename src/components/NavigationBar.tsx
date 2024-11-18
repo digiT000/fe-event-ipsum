@@ -178,7 +178,7 @@ function NavigationBar({
                 <nav className="flex gap-3">
                   <Button
                     width="w-fit"
-                    href="http://localhost:3000/auth/login"
+                    href="/auth/login"
                     isButton={false}
                     isButtonDisable={false}
                     type="primary-border"
@@ -188,7 +188,7 @@ function NavigationBar({
                   <Button
                     width="w-fit"
                     isButton={false}
-                    href="http://localhost:3000/auth/register"
+                    href="/auth/register"
                     isButtonDisable={false}
                     type="primary"
                     text="
