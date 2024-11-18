@@ -74,7 +74,6 @@ function RegisterPage() {
             window.location.href = "/auth/login";
           }, 1200);
         } else if (response.data.code === "AU") {
-          console.log(response.data.code);
           // EMAIL ALREADY IN USED
           setToast({
             highlightText: "Email already in use",
@@ -93,9 +92,7 @@ function RegisterPage() {
         }
       })
       .catch((error) => {
-        console.log(error);
         if (error.code === "REQ") {
-          console.log(error.data.code);
           // ALL FIELDS ARE REQUIRED
           setToast({
             highlightText: "All field are required",

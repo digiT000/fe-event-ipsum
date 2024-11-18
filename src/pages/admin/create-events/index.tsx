@@ -34,7 +34,6 @@ function CreateEventForm() {
     discount_percentage: 0,
     is_active: false, // Default ke active
   });
-  console.log("ini adalah form data:", formData);
 
   const [errors, setErrors] = useState({
     is_paid: "",
@@ -259,7 +258,6 @@ function CreateEventForm() {
       }
     }
 
-    console.log("testiiii", formData);
     const data = new FormData();
     data.append("event_name", formData.event_name);
     data.append("event_description", formData.event_description);
@@ -285,7 +283,6 @@ function CreateEventForm() {
         .then((response) => {
           if (response) {
             setIsLoading(false);
-            console.log(response);
             alert("Event berhasil dibuat!");
             router.push("/admin/list-events");
           }
@@ -310,14 +307,11 @@ function CreateEventForm() {
     });
   }
   useEffect(() => {
-    console.log(isLoading);
     if (!isLoading) {
-      console.log("execute if user are admin");
       if (user?.user_role === "admin") {
         handleFetchCategory();
         // Do nothing
       } else {
-        console.log("execute if user are not admin");
         handleUnAuthorized();
       }
     }

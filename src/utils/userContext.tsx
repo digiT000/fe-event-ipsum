@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from "react";
-import { LoginAuth, UserProps } from "@/models/models";
+import { UserProps } from "@/models/models";
 import { AuthHandler } from "./authValidation";
 
 // Define the interface

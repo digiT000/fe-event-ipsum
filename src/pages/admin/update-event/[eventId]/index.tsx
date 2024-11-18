@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { UpdateEventAdmin } from "@/utils/Update-event-admin";
 import { UpdateEvent } from "@/models/createevent";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -39,7 +38,6 @@ function UpdateEvents() {
     is_active: true, // Default ke active
     discountId: 0,
   });
-  console.log(formData);
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
@@ -60,7 +58,6 @@ function UpdateEvents() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("testiiii", formData);
     // Validasi form data
     if (!formData.event_name || formData.event_name.trim() === "") {
       Swal.fire({
@@ -205,14 +202,12 @@ function UpdateEvents() {
     data.append("is_active", formData.is_active.toString());
     data.append("event_image", formData.event_image);
     data.append("discountId", formData?.discountId.toString());
-    console.log("ini data:", data);
 
     try {
       await eventHandler
         .updateEvent(data, event_id, adminToken as string)
         .then((response) => {
           if (response) {
-            console.log(response);
             alert("Event berhasil update!");
             router.push("/admin/list-events");
           }
@@ -242,7 +237,6 @@ function UpdateEvents() {
     setEventId(Number(eventId));
 
     if (!isLoading) {
-      console.log("execute if user are admin");
       if (user?.user_role === "admin") {
         const fetchEvent = async () => {
           try {
@@ -253,7 +247,6 @@ function UpdateEvents() {
               },
             });
             const data = response.data.data;
-            console.log(response);
             setFormData({
               categoryId: data.categoryId,
               event_name: data.event_name,
@@ -283,7 +276,6 @@ function UpdateEvents() {
 
         fetchEvent();
       } else {
-        console.log("execute if user are not admin");
         handleUnAuthorized();
       }
     }

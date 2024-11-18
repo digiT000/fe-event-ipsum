@@ -1,10 +1,6 @@
 import axios from "axios";
 
 export const UpdateEventAdmin = async (formData: any, event_id: number) => {
-  const discountPercentage = formData.discounted_price;
-  const is_active = formData.is_active;
-
-  console.log("inputd data : ", formData);
   try {
     const response = await axios.put(`/api/admin/events/${event_id}`, formData);
 

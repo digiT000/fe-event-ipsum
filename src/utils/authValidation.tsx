@@ -87,7 +87,6 @@ export class AuthHandler {
         return data;
       }
     } catch (error) {
-      console.log(error); // Menampilkan error jika terjadi kesalahan
       return error;
     }
   }
@@ -176,7 +175,7 @@ export class AuthHandler {
             return null;
           }
         } catch (error) {
-          console.log("Error validating token after refresh", error);
+          return error;
         }
       }
     } catch (error) {

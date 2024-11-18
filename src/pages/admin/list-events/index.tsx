@@ -26,7 +26,6 @@ function Listevent() {
           },
         }
       );
-      console.log("search", response.data.data);
       return response.data.data;
     } catch (error) {}
   }
@@ -160,7 +159,6 @@ function Listevent() {
           getAllEvents();
           isInitialRender.current = false;
         } else {
-          console.log("execute if user are not admin");
           handleUnAuthorized();
         }
       }

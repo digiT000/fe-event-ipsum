@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { EventHandlerApi } from "@/utils/eventHandler";
 import { Category } from "@/models/categoryList";
-import { EventCardProps } from "@/models/models";
+import { EventCardProps, EventListResponse } from "@/models/models";
 import React, { useEffect, useRef, useState } from "react";
 import InputField from "../InputField";
 // import EventCard from "../EventCard";
@@ -49,7 +49,7 @@ function EventListSection() {
       setEventIsLimit(false);
       setEmptyResult(false);
       setIsLoadingEvent(true); // set loading to true
-      const response: any = await eventHandlerApi.getAllEvent();
+      const response = await eventHandlerApi.getAllEvent();
       setEventData(response.data);
       setLastCursor(response.cursor);
       setIsLoadingEvent(false);
@@ -58,16 +58,15 @@ function EventListSection() {
         setEventIsLimit(false);
         setEmptyResult(false);
         setIsLoadingEvent(true); // set loading to true
-        console.log(inputSearch);
-        const response: any = await eventHandlerApi.getEventByFilter(
+        const response = await eventHandlerApi.getEventByFilter(
           inputSearch,
           category
         );
         setEmptyResult(response.data.length === 0);
         setEventData(response.data);
         setLastCursor(response.cursor);
-      } catch (error: any) {
-        console.log(error);
+      } catch (error) {
+        return error;
       } finally {
         setIsLoadingEvent(false);
       }
@@ -78,11 +77,11 @@ function EventListSection() {
   async function handleGetAllEvent() {
     try {
       setIsLoadingEvent(true); // set loading to true
-      const response: any = await eventHandlerApi.getAllEvent();
+      const response = await eventHandlerApi.getAllEvent();
       setEventData(response.data);
       setLastCursor(response.cursor);
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      return error;
     } finally {
       setIsLoadingEvent(false);
     }
@@ -90,23 +89,21 @@ function EventListSection() {
 
   // async handle fething more data
   async function handleFetchMoreData() {
-    console.log(lastCursor);
     try {
       setIsLoadingButton(true);
-      const response: any = await eventHandlerApi.getMoreEvent(
+      const response = await eventHandlerApi.getMoreEvent(
         lastCursor as number,
         inputSearch,
         selectedCategory
       );
-      console.log("Load More Data: ", response.data);
       if (response.data.length === 0) {
         setEventIsLimit(true);
       }
       setEventData((prevState) => [...prevState, ...response.data]);
 
       setLastCursor(response.cursor);
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      return error;
     } finally {
       setIsLoadingButton(false);
       setIsLoadingEvent(false);
@@ -117,10 +114,10 @@ function EventListSection() {
   async function handleGetCategory() {
     try {
       setIsLoadingCategories(true);
-      const response: any = await eventHandlerApi.getAllCategories();
+      const response = await eventHandlerApi.getAllCategories();
       setCategories(response.data);
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      return error;
     } finally {
       setIsLoadingCategories(false);
     }

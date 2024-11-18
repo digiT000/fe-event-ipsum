@@ -79,7 +79,6 @@ const Index = () => {
           getAllUsers();
           isInitialRender.current = false;
         } else {
-          console.log("execute if user are not admin");
           handleUnAuthorized();
         }
       }

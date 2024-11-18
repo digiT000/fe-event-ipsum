@@ -39,7 +39,6 @@ function TransactionHistory() {
         transactionId,
         userToken
       );
-      console.log(response);
       if (response.status === 200) {
         setIsLoading(false);
         setShowToast(true);
@@ -48,7 +47,7 @@ function TransactionHistory() {
         alert(response.message);
       }
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -57,18 +56,15 @@ function TransactionHistory() {
       const response = await bookingHandler.getUserBooking(userToken as string);
       if (response.status === 200) {
         setListTransaction(response.data);
-      } else {
-        console.log(response.message);
       }
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
   // USE EFFECT FOR MODAL
   useEffect(() => {
     if (showModal) {
-      console.log("exec");
       setTimeout(() => {
         setShowDelayedModal(showModal);
       }, 10); // Adjust the delay as needed
@@ -87,9 +83,6 @@ function TransactionHistory() {
       handleGetUserTransaction();
     }
   }, []);
-  console.log("List Transaction :", listTransaction);
-  console.log("Transaction Active:", transactionActive);
-  console.log("Event Active:", eventActive);
 
   return (
     <>
