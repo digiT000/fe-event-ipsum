@@ -6,7 +6,6 @@ import BookingCancelModal from "@/components/BookingCancelModal";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import Overlay from "@/components/Overlay";
-import { AuthHandler } from "@/utils/authValidation";
 import Toast from "@/components/alert";
 import EmptryTransactionSection from "@/components/section/EmptryTransactionSection";
 import BookingReviewModal from "@/components/BookingReviewModal";
