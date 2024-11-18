@@ -6,7 +6,7 @@ interface UserMenu {
 }
 
 function UserMenu({ userLogout }: UserMenu) {
-  const [hideMenu, setHideMenu] = useState<boolean>(true);
+  const [hideMenu] = useState<boolean>(true);
 
   return !hideMenu ? (
     <></>

@@ -93,7 +93,7 @@ export class AuthHandler {
 
   async handleUserLogout(token: string) {
     try {
-      const response = await axios.put(
+      await axios.put(
         "/api/auth/logout-user",
         {},
         {
@@ -102,7 +102,9 @@ export class AuthHandler {
           },
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
   }
   // Fungsi untuk mengirim data registrasi ke server
   async handleRegistrationUser(formData: RegisterForm) {
@@ -114,8 +116,12 @@ export class AuthHandler {
         role: "user", // Mengatur role user sebagai "user"
       });
       return response;
-    } catch (error: any) {
-      return error.response.data;
+    } catch (error) {
+      return {
+        message: error,
+        status: 500,
+        data: [],
+      };
     }
   }
 
@@ -184,31 +190,5 @@ export class AuthHandler {
       Cookies.remove(`access${UniqueCode.ADMIN}_token`);
       Cookies.remove(`refresh${UniqueCode.ADMIN}_token`);
     }
-  }
-
-  redirectIfUserLogin() {
-    const router = useRouter();
-    useEffect(() => {
-      // Check if user is already logged in
-      const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
-      const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
-      if (accessToken || refreshToken) {
-        router.push("/"); // Redirect to home page if already logged in
-      }
-    }, []);
-    return null;
-  }
-
-  redirectIfUserNotLogin() {
-    const router = useRouter();
-    useEffect(() => {
-      // Check if user is already logged in
-      const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
-      const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
-      if (!accessToken || !refreshToken) {
-        router.push("/"); // Redirect to home page if already logged in
-      }
-    }, []);
-    return null;
   }
 }

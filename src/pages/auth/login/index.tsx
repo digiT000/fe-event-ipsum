@@ -1,4 +1,4 @@
-import { LoginAuth } from "@/models/models";
+import { LoginAuth, UniqueCode } from "@/models/models";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { AuthHandler } from "@/utils/authValidation";
@@ -7,11 +7,10 @@ import Link from "next/link";
 import { useAuth } from "@/utils/userContext";
 import ToastAlert, { Toast } from "@/components/alert";
 import Header from "@/components/Header";
+import Cookies from "js-cookie";
 
 function LoginPage() {
   const authHandler = new AuthHandler();
-  // Check if the user already login or not
-  authHandler.redirectIfUserLogin();
 
   const router = useRouter();
   const { userLogin } = useAuth();
@@ -78,6 +77,15 @@ function LoginPage() {
   useEffect(() => {
     setIsButtonDisabled(authHandler.handleLoginValidation(formData));
   }, [formData.email, formData.password]);
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
+    const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
+    if (accessToken || refreshToken) {
+      router.push("/"); // Redirect to home page if already logged in
+    }
+  }, []);
 
   return (
     <>

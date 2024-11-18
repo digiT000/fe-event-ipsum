@@ -47,22 +47,20 @@ function NavigationBar({
   }
 
   // Fetch data user based on access token
-  async function handleFethingUserData(userToken: string): Promise<void> {
+  async function handleFethingUserData(userToken: string) {
     try {
       setLoading(true);
       const response = await authHandler.validateUserToken(userToken);
-      console.log("New data user (data)", response);
-
       // Check if the response true
       response ? userLogin(response) : userLogin(null);
       setLoading(false);
     } catch (error) {
-      console.log("Error validating token after refresh", error);
+      return error;
     }
   }
 
   // Refersh user token
-  async function refreshUserAcessToken(refreshToken: string): Promise<void> {
+  async function refreshUserAcessToken(refreshToken: string) {
     try {
       setLoading(true);
       const response = await authHandler.refreshUserAcessToken(refreshToken);
@@ -71,20 +69,17 @@ function NavigationBar({
       response ? userLogin(response) : userLogin(null);
       setLoading(false);
     } catch (error) {
-      console.log("Error refreshing token", error);
+      return error;
     }
   }
 
   // Can be improved to meet DRY concept
   useEffect(() => {
-    console.log(userRole);
-
     const userToken = Cookies.get(`access${uniqueCode}_token`);
     const refreshToken = Cookies.get(`refresh${uniqueCode}_token`);
 
     // Check if the data user already available
     if (!user) {
-      console.log("exec");
       // Check if the user already has a refresh token
       if (refreshToken) {
         // Check the availability of the access token
@@ -131,7 +126,9 @@ function NavigationBar({
         <Image
           width={64}
           height={64}
-          className={`w-6 h-6 ease-in-out transition-transform duration-200 ${showMenu ? "rotate-180" : "rotate-0"}`}
+          className={`w-6 h-6 ease-in-out transition-transform duration-200 ${
+            showMenu ? "rotate-180" : "rotate-0"
+          }`}
           alt="coin"
           src="/icon/dropdown.svg"
         />

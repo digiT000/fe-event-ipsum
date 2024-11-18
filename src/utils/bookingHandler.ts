@@ -14,8 +14,8 @@ export class BookingHandler {
         }
       );
       return response.data;
-    } catch (error: any) {
-      return error.response.data;
+    } catch (error) {
+      return error;
     }
   }
   async getUserBooking(token: string) {

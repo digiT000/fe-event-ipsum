@@ -1,3 +1,5 @@
+import TransactionHistory from "@/pages/user/transaction-history";
+
 export interface LoginAuth {
   email: string;
   password: string;
@@ -104,4 +106,18 @@ export interface ReviewData {
   review_content: string;
   review_rating: number;
   isAttend: boolean;
+}
+
+export interface TransactionHistoryResp {
+  transaction_id: number;
+  Event: {
+    event_id: number;
+    event_name: string;
+    event_start_date: Date;
+    order_date: string;
+  };
+  payment_ammount: number | 0;
+  order_date: Date;
+  status_order: BookingStatus;
+  payment_method: string;
 }

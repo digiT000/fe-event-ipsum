@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { title } from "process";
 import { useAuth } from "@/utils/userContext";
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import { formatNumber } from "@/utils/formatter/formatNumber";
 import { BookingHandler } from "@/utils/bookingHandler";
@@ -16,12 +16,17 @@ import AlertToast, { Toast } from "./alert";
 import Overlay from "./Overlay";
 import MultiPurposeModal, { ModalProps } from "./MultiPurposeModal";
 import { UniqueCode } from "@/models/models";
+interface CheckboxChangeEvent {
+  target: {
+    checked: boolean;
+  };
+}
 
 interface BookingModalProps {
   event_id: number;
   event_image: string;
   event_name: string;
-  event_date: ReactElement<any, any>;
+  event_date: React.ReactNode;
   event_price: number;
   user_points: number;
   start_date: string;
@@ -180,6 +185,7 @@ function BookingModal({
       }
     } catch (error) {
       alert("Failed to book the event. Please try again.");
+      return error;
     }
   }
 
@@ -227,7 +233,9 @@ function BookingModal({
         id="default-modal"
         tabIndex={isShow ? -1 : 99}
         aria-hidden={isShow ? "false" : "true"}
-        className={`${isShow ? "block" : "hidden"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full bg-gray-950 bg-opacity-50`}
+        className={`${
+          isShow ? "block" : "hidden"
+        } overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full bg-gray-950 bg-opacity-50`}
       >
         <div className="relative w-full md:max-w-xl h-full md:p-4 md:mx-auto ">
           {/* <!-- Modal content --> */}
@@ -313,7 +321,9 @@ function BookingModal({
                           type="checkbox"
                           value=""
                           checked={usePoint}
-                          onChange={(e: any) => setUsePoint(e.target.checked)}
+                          onChange={(e: CheckboxChangeEvent) =>
+                            setUsePoint(e.target.checked)
+                          }
                           className="w-6 h-6 text-indigo-600 bg-zinc-100 border-zinc-300 rounded focus:ring-indigo-600 focus:ring-2 "
                         />
                       </div>

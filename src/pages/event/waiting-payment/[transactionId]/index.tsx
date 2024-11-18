@@ -103,6 +103,9 @@ function WaitingPaymentPage() {
         event_location: "",
         payment_method: "",
       });
+
+      // Display a user-friendly error message
+      alert("An unexpected error occurred. Please try again later.");
     }
   }
 
@@ -139,7 +142,6 @@ function WaitingPaymentPage() {
   // USE EFFECT FOR MODAL
   useEffect(() => {
     if (showModal) {
-      console.log("exec");
       setTimeout(() => {
         setShowDelayedModal(showModal);
       }, 10); // Adjust the delay as needed

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { EventHandlerApi } from "@/utils/eventHandler";
 import { Category } from "@/models/categoryList";
-import { EventCardProps, EventListResponse } from "@/models/models";
+import { EventCardProps } from "@/models/models";
 import React, { useEffect, useRef, useState } from "react";
 import InputField from "../InputField";
 // import EventCard from "../EventCard";

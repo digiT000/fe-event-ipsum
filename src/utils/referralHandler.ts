@@ -14,8 +14,8 @@ export class ReferralHandler {
         }
       );
       return response.status;
-    } catch (error: any) {
-      return error.response.data.status;
+    } catch (error) {
+      return error;
     }
   }
 }

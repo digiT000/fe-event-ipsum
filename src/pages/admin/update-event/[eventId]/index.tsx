@@ -16,8 +16,7 @@ function UpdateEvents() {
   const router = useRouter();
 
   // const { eventId } = router.query;
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
   const [event_id, setEventId] = useState(0);
   const { user, isLogin, isLoading } = useAuth();
   const [categoryList, setCategoryList] = useState<Category[]>([]);
@@ -39,7 +38,9 @@ function UpdateEvents() {
     discountId: 0,
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: {
+    target: { name: string; value: string | number | Date | File | boolean };
+  }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -213,7 +214,7 @@ function UpdateEvents() {
           }
         });
     } catch (error) {
-      alert("Terjadi kesalahan: ");
+      alert(`Terjadi kesalahan: ${error}`);
     }
   };
 
@@ -268,7 +269,11 @@ function UpdateEvents() {
               discountId: data.discountId,
             });
           } catch (err) {
-            setError(null);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Ada kesalahan saat mengambil data ${err}`,
+            });
           } finally {
             setLoading(false);
           }
@@ -448,7 +453,7 @@ function UpdateEvents() {
                         id="paidEvent"
                         name="is_paid"
                         checked={formData.is_paid === true}
-                        onChange={(e) =>
+                        onChange={() =>
                           handleChange({
                             target: { name: "is_paid", value: true },
                           })
@@ -464,7 +469,7 @@ function UpdateEvents() {
                         id="freeEvent"
                         name="is_paid"
                         checked={formData.is_paid === false}
-                        onChange={(e) =>
+                        onChange={() =>
                           handleChange({
                             target: { name: "is_paid", value: false },
                           })
@@ -621,7 +626,7 @@ function UpdateEvents() {
                           id="is_online"
                           name="is_online"
                           checked={formData.is_online === true}
-                          onChange={(e) =>
+                          onChange={() =>
                             handleChange({
                               target: { name: "is_online", value: true },
                             })
@@ -637,7 +642,7 @@ function UpdateEvents() {
                           id="is_offline"
                           name="is_online"
                           checked={formData.is_online === false}
-                          onChange={(e) =>
+                          onChange={() =>
                             handleChange({
                               target: { name: "is_online", value: false },
                             })

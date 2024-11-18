@@ -10,13 +10,13 @@ import { AuthHandler } from "@/utils/authValidation";
 import Toast from "@/components/alert";
 import EmptryTransactionSection from "@/components/section/EmptryTransactionSection";
 import BookingReviewModal from "@/components/BookingReviewModal";
-import { UniqueCode } from "@/models/models";
+import { TransactionHistoryResp, UniqueCode } from "@/models/models";
 import Header from "@/components/Header";
+import { useRouter } from "next/router";
 
 function TransactionHistory() {
   const authHandler = new AuthHandler();
   // Check if the user already login or not
-  authHandler.redirectIfUserNotLogin();
   const isInitialRender = useRef<boolean>(true); // Check if its already be render or not
   const userToken = Cookies.get(`access${UniqueCode.USER}_token`);
   const bookingHandler = new BookingHandler();
@@ -77,8 +77,13 @@ function TransactionHistory() {
 
   // InitialRender
   useEffect(() => {
+    const router = useRouter();
+    const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
+    const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
     // Check the status of render
-    if (isInitialRender.current) {
+    if (!accessToken || !refreshToken) {
+      router.push("/"); // Redirect to home page if already logged in
+    } else if (isInitialRender.current) {
       isInitialRender.current = false;
       handleGetUserTransaction();
     }
@@ -155,29 +160,31 @@ function TransactionHistory() {
               )}
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                {listTransaction?.map((transaction: any, i: number) => {
-                  return (
-                    <TransactionCard
-                      key={i}
-                      eventTitle={transaction.Event.event_name}
-                      eventStartDate={transaction.Event.event_start_date}
-                      orderDate={transaction.order_date}
-                      totalAmount={transaction.payment_ammount}
-                      transactionStatus={transaction.status_order}
-                      transactionId={transaction.transaction_id}
-                      paymentMethod={transaction.payment_method}
-                      showCancelModal={() => {
-                        setTransactionActive(transaction.transaction_id);
-                        setShowModal(true);
-                      }}
-                      showReviewModal={() => {
-                        setTransactionActive(transaction.transaction_id);
-                        setEventActive(transaction.Event.event_id);
-                        setShowReviewModal(true);
-                      }}
-                    />
-                  );
-                })}
+                {listTransaction?.map(
+                  (transaction: TransactionHistoryResp, i: number) => {
+                    return (
+                      <TransactionCard
+                        key={i}
+                        eventTitle={transaction.Event.event_name}
+                        eventStartDate={transaction.Event.event_start_date}
+                        orderDate={transaction.order_date}
+                        totalAmount={transaction.payment_ammount}
+                        transactionStatus={transaction.status_order}
+                        transactionId={transaction.transaction_id}
+                        paymentMethod={transaction.payment_method}
+                        showCancelModal={() => {
+                          setTransactionActive(transaction.transaction_id);
+                          setShowModal(true);
+                        }}
+                        showReviewModal={() => {
+                          setTransactionActive(transaction.transaction_id);
+                          setEventActive(transaction.Event.event_id);
+                          setShowReviewModal(true);
+                        }}
+                      />
+                    );
+                  }
+                )}
               </div>
             </div>
           </div>

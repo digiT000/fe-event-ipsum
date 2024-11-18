@@ -10,11 +10,8 @@ function EventCard({
   event_start_date,
   event_end_date,
   is_paid,
-  is_online,
   event_price,
-  discounted_price,
   event_image,
-  event_capacity,
   onClick,
 }: EventCardProps) {
   // FORMATTER

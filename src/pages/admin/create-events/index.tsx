@@ -15,7 +15,7 @@ function CreateEventForm() {
   const router = useRouter();
   const eventHandlerApi = new EventHandlerApi();
   const { user, isLogin, isLoading } = useAuth();
-  const [isLoadingButton, setIsLoading] = useState<Boolean>(false);
+  const [isLoadingButton, setIsLoading] = useState<boolean>(false);
   const adminToken = Cookies.get(`access${UniqueCode.ADMIN}_token`);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
 
@@ -35,20 +35,12 @@ function CreateEventForm() {
     is_active: false, // Default ke active
   });
 
-  const [errors, setErrors] = useState({
-    is_paid: "",
-    event_price: "",
-    discount_percentage: "",
-  });
-
-  const handleRadioChange = (value: boolean) => {
-    setFormData({
-      ...formData,
-      is_paid: value,
-    });
-  };
-
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: {
+    target: {
+      name: string;
+      value: string | number | Date | File | boolean;
+    };
+  }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -65,7 +57,7 @@ function CreateEventForm() {
     }
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validasi form data
@@ -289,7 +281,7 @@ function CreateEventForm() {
         });
     } catch (error) {
       setIsLoading(false);
-      alert("Terjadi kesalahan: ");
+      alert(`Terjadi kesalahan: ${error}`);
     }
   };
 
@@ -477,7 +469,7 @@ function CreateEventForm() {
                         id="paidEvent"
                         name="is_paid"
                         checked={formData.is_paid === true}
-                        onChange={(e) =>
+                        onChange={() =>
                           handleChange({
                             target: { name: "is_paid", value: true },
                           })
@@ -493,7 +485,7 @@ function CreateEventForm() {
                         id="freeEvent"
                         name="is_paid"
                         checked={formData.is_paid === false}
-                        onChange={(e) =>
+                        onChange={() =>
                           handleChange({
                             target: { name: "is_paid", value: false },
                           })
@@ -650,7 +642,7 @@ function CreateEventForm() {
                           id="is_online"
                           name="is_online"
                           checked={formData.is_online === true}
-                          onChange={(e) =>
+                          onChange={() =>
                             handleChange({
                               target: { name: "is_online", value: true },
                             })
@@ -666,7 +658,7 @@ function CreateEventForm() {
                           id="is_offline"
                           name="is_online"
                           checked={formData.is_online === false}
-                          onChange={(e) =>
+                          onChange={() =>
                             handleChange({
                               target: { name: "is_online", value: false },
                             })

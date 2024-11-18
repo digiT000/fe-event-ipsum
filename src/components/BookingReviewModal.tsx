@@ -76,7 +76,7 @@ function BookingReviewModal({
       setShowToast(true);
       window.location.href = "/user/transaction-history";
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
   console.log(reviewData);
@@ -86,7 +86,6 @@ function BookingReviewModal({
   }, [
     reviewData.review_content,
     reviewData.review_rating,
-    reviewData.isAttend,
     reviewData.isAttend,
   ]);
 
@@ -100,7 +99,9 @@ function BookingReviewModal({
       />
 
       <div
-        className={`${isShow ? " z-[100] translate-y-0" : " opacity-0 translate-y-5 -z-50"} fixed top-0 right-0 left-0 w-full md:max-w-xl md:flex md:items-center md:justify-center h-full transition-all duration-250 ease-in-out md:p-4 md:mx-auto `}
+        className={`${
+          isShow ? " z-[100] translate-y-0" : " opacity-0 translate-y-5 -z-50"
+        } fixed top-0 right-0 left-0 w-full md:max-w-xl md:flex md:items-center md:justify-center h-full transition-all duration-250 ease-in-out md:p-4 md:mx-auto `}
       >
         {/* <!-- Modal content --> */}
         <div className="absolute w-full h-fit bg-white rounded-tl-md rounded-tr-md shadow bottom-0 md:relative md:rounded-md ">
@@ -166,8 +167,8 @@ function BookingReviewModal({
                 ) : (
                   <div className="p-4 bg-zinc-100 rounded-md">
                     <p className=" text-gray-600 md:max-w-[400px]">
-                      We're sorry you couldn't make it. You missed a great
-                      event! Keep an eye out for our next one.
+                      {`We're sorry you couldn't make it. You missed a great
+                      event! Keep an eye out for our next one.`}
                     </p>
                   </div>
                 )}

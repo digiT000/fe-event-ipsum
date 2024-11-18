@@ -27,7 +27,9 @@ function Listevent() {
         }
       );
       return response.data.data;
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
   }
 
   const getAllEvents = async () => {
@@ -62,10 +64,8 @@ function Listevent() {
       Swal.fire({
         icon: "error",
         title: "Gagal!",
-        text: "Tidak dapat mengambil data event. Silakan coba lagi.",
+        text: `Tidak dapat mengambil data event. Silakan coba lagi. ${error}`,
       });
-
-      console.error("Error fetching events:", error);
     }
   };
 
@@ -84,7 +84,8 @@ function Listevent() {
         // setIsLoading(true); // set loading to true
         const response = await eventsearch(inputSearch);
         setEvents(response);
-      } catch (error: any) {
+      } catch (error) {
+        return error;
         // setError(error.message);
       } finally {
         // setIsLoading(false);
@@ -145,8 +146,7 @@ function Listevent() {
             getAllEvents(); // Refresh daftar event setelah penghapusan
           })
           .catch((error) => {
-            console.error("Gagal menghapus event:", error);
-            Swal.fire("Terjadi kesalahan saat menghapus event", "", "error");
+            Swal.fire("Terjadi kesalahan saat menghapus event", "", error);
           });
       }
     });

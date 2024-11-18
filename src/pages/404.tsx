@@ -11,11 +11,11 @@ const Custom404 = () => {
             <span className="sr-only">Error</span>404
           </h2>
           <p className="text-2xl font-semibold md:text-3xl text-gray-800 dark:text-gray-300">
-            Sorry, we couldn't find this page.
+            {`Sorry, we couldn't find this page.`}
           </p>
           <p className="mt-4 mb-8 text-gray-600 dark:text-gray-400">
-            But don't worry, you can find plenty of other things on our
-            homepage.
+            {`But don't worry, you can find plenty of other things on our
+            homepage.`}
           </p>
 
           <Button

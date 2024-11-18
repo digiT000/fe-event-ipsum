@@ -11,15 +11,17 @@ const Custom500 = () => {
             <span className="sr-only">Error</span>500
           </h2>
           <p className="text-2xl font-semibold md:text-3xl text-gray-800 dark:text-gray-300">
-            Oooops! Internal Server Error. That is, something went terribly
-            wrong.
+            {`Oooops! Internal Server Error. That is, something went terribly
+            wrong.`}
           </p>
 
           <p className="mt-4 mb-8 text-gray-600 dark:text-gray-400">
-            Don't worry, we've been reported about that. In the meantime, you
+            {`Don't worry, we've been reported about that. In the meantime, you
             can help us
-            <span className="underlined">catch some nasty bugs</span>. We got
-            you the deadliest of all weapons!
+            ${(
+              <span className="underlined">catch some nasty bugs</span>
+            )}. We got
+            you the deadliest of all weapons!`}
           </p>
 
           <Button

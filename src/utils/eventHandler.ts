@@ -25,7 +25,7 @@ export class EventHandlerApi {
 
       return { data, cursor };
     } catch (error) {
-      return { data: [], cursor: 0 as number }; // Return empty array for error handling
+      return { data: [], cursor: 0 as number, message: error }; // Return empty array for error handling
     }
   }
 
@@ -34,7 +34,10 @@ export class EventHandlerApi {
       const response = await axios.get(`/api/users/events/${eventId}`);
       return response.data;
     } catch (error) {
-      return [];
+      return {
+        message: error,
+        data: [],
+      };
     }
   }
   async getMoreEvent(
@@ -51,7 +54,7 @@ export class EventHandlerApi {
 
       return { data, cursor };
     } catch (error) {
-      return { data: [], cursor: 0 as number }; // Return empty array for error handling
+      return { data: [], cursor: 0 as number, message: error }; // Return empty array for error handling
     }
   }
 
@@ -61,7 +64,10 @@ export class EventHandlerApi {
       return response.data;
     } catch (error) {
       console.error("Error fetching categories:", error);
-      return [];
+      return {
+        message: error,
+        data: [],
+      };
     }
   }
 
@@ -97,7 +103,6 @@ export class EventHandlerApi {
 
       return response.data; // Mengembalikan data dari response
     } catch (error) {
-      console.error("Error creating event:", error);
       // Jika Anda menggunakan TypeScript, Anda dapat memeriksa tipe error di sini
       if (axios.isAxiosError(error)) {
         throw new Error(error.response?.data?.message || "Gagal membuat event");

@@ -1,17 +1,17 @@
-import { RegisterForm } from "@/models/models";
-import React, { useState, useEffect, useRef } from "react";
+import { RegisterForm, UniqueCode } from "@/models/models";
+import React, { useState, useEffect } from "react";
 import { AuthHandler } from "@/utils/authValidation";
 import ToastAlert, { Toast } from "@/components/alert";
-
+import Cookies from "js-cookie";
 import Button from "@/components/Button";
 import Link from "next/link";
 import Header from "@/components/Header";
+import { useRouter } from "next/router";
 // Import useRouter from next/router
 
 function RegisterPage() {
   const authHandler = new AuthHandler();
   // Check if the user already login or not
-  authHandler.redirectIfUserLogin();
 
   // Disable Button
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
@@ -63,32 +63,34 @@ function RegisterPage() {
     await authHandler
       .handleRegistrationUser(formData)
       .then((response) => {
-        if (response.status === 201) {
-          setToast({
-            highlightText: "redirect you to login page",
-            text: "User registered successfully",
-            type: "SUCCESS",
-            showToast: true,
-          });
-          setTimeout(() => {
-            window.location.href = "/auth/login";
-          }, 1200);
-        } else if (response.data.code === "AU") {
-          // EMAIL ALREADY IN USED
-          setToast({
-            highlightText: "Email already in use",
-            text: "You can try login or use another email",
-            type: "FAILED",
-            showToast: true,
-          });
-          setTimeout(() => {
+        if (response) {
+          if (response.status === 201) {
             setToast({
-              ...toast,
-              showToast: false,
+              highlightText: "redirect you to login page",
+              text: "User registered successfully",
+              type: "SUCCESS",
+              showToast: true,
             });
-          }, 1800);
-          setIsLoading(false);
-          setIsButtonDisabled(false);
+            setTimeout(() => {
+              window.location.href = "/auth/login";
+            }, 1200);
+          } else if (response.data.code === "AU") {
+            // EMAIL ALREADY IN USED
+            setToast({
+              highlightText: "Email already in use",
+              text: "You can try login or use another email",
+              type: "FAILED",
+              showToast: true,
+            });
+            setTimeout(() => {
+              setToast({
+                ...toast,
+                showToast: false,
+              });
+            }, 1800);
+            setIsLoading(false);
+            setIsButtonDisabled(false);
+          }
         }
       })
       .catch((error) => {
@@ -115,6 +117,16 @@ function RegisterPage() {
   useEffect(() => {
     setIsButtonDisabled(authHandler.handleRegistrationValidation(formData));
   }, [formData.email, formData.password, formData.name]);
+
+  useEffect(() => {
+    const router = useRouter();
+    // Check if user is already logged in
+    const accessToken = Cookies.get(`access${UniqueCode.USER}_token`);
+    const refreshToken = Cookies.get(`refresh${UniqueCode.USER}_token`);
+    if (accessToken || refreshToken) {
+      router.push("/"); // Redirect to home page if already logged in
+    }
+  }, []);
 
   return (
     <>
