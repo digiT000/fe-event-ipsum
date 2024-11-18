@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-image: url("/mainBackground.svg");
+}
+
+.customBgImage {
+  background-image: url("/heroSection - mobile.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 1024px) {
+  .customBgImage {
+    background-image: url("/heroSection - desktop.svg");
+  }
+}
