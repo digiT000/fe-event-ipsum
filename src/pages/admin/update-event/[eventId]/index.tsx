@@ -266,7 +266,7 @@ function UpdateEvents() {
               is_active: data.Discount.is_active,
               is_online: data.is_online,
               is_paid: data.is_paid,
-              discountId: data.discountId,
+              discountId: data.Discount.discount_id,
             });
           } catch (err) {
             Swal.fire({
