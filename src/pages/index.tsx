@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import NavigationBar from "@/components/NavigationBar";
 import ListLogo from "@/components/section/ListLogoSection";
 import EventListSection from "@/components/section/EventListSection";
@@ -8,7 +8,6 @@ import Header from "@/components/Header";
 
 function Home() {
   const { user, isLogin } = useAuth();
-  console.log("Init", user);
 
   return (
     <>

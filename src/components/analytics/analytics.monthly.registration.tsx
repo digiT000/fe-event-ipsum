@@ -69,10 +69,9 @@ const MyBarChartTransaction = ({ adminToken }: chartComponentProps) => {
           ...item,
           month: getMonthName(item.month), // Mengubah angka bulan menjadi nama bulan
         }));
-        console.log(transformedData);
         setChartData(transformedData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        return error;
       }
     };
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { AuthHandler } from "./authValidation";
 
 function useAuthLogic(authHandler: any, userLogin: any) {
   const [user, setUser] = useState(null);
@@ -41,7 +40,6 @@ function useAuthLogic(authHandler: any, userLogin: any) {
         if (userToken) {
           handleRefreshToken(userToken);
         } else {
-          console.log("Refresh Token got exec");
           refreshUserAcessToken(refreshToken);
         }
       }

@@ -87,9 +87,22 @@ function WaitingPaymentPage() {
         event_location: data.Event.event_location,
         payment_method: data.payment_method,
       });
-      console.log(response);
-    } catch (error: any) {
-      console.log(error.response);
+    } catch (error) {
+      setTransaction({
+        category_name: "",
+        event_description: "",
+        event_end_date: "",
+        event_image: "",
+        event_name: "",
+        event_start_date: "",
+        is_online: false,
+        order_date: "",
+        payment_ammount: 0,
+        status_order: "",
+        transaction_id: 0,
+        event_location: "",
+        payment_method: "",
+      });
     }
   }
 

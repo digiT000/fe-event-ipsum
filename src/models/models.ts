@@ -45,6 +45,10 @@ export interface EventCardProps {
   event_location: string;
   onClick?: () => void;
 }
+export interface EventListResponse {
+  data: EventCardProps[];
+  cursor: number;
+}
 
 export interface BookingData {
   user_id?: number;

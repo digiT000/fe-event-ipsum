@@ -54,13 +54,10 @@ function LoginPage() {
       setIsLoading(true);
       setIsButtonDisabled(true);
       const response = await authHandler.handleSubmitData(formData, "user");
-      console.log("Respone Handle Submit : ", response);
       if (response?.status === 200) {
-        console.log("status === 200");
         userLogin(response.data.user);
         router.push("/");
       } else {
-        console.log("error : ", response);
         setToast({
           highlightText: "Login Failed",
           text: "Invalid Email or Password",
@@ -74,7 +71,7 @@ function LoginPage() {
         }, 1500);
       }
     } catch (error) {
-      console.log("Something went wrong :", error);
+      return error;
     }
   };
 

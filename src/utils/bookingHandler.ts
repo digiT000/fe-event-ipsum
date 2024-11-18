@@ -13,10 +13,8 @@ export class BookingHandler {
           },
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
-      console.log(error.response);
       return error.response.data;
     }
   }
@@ -27,10 +25,9 @@ export class BookingHandler {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
   async cancelBooking(transactionId: number, token: string) {
@@ -44,10 +41,9 @@ export class BookingHandler {
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -62,10 +58,9 @@ export class BookingHandler {
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -80,10 +75,8 @@ export class BookingHandler {
         }
       );
 
-      console.log(response.data);
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }
@@ -98,10 +91,8 @@ export class BookingHandler {
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

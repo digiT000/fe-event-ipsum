@@ -56,7 +56,6 @@ function DetailEvent() {
     try {
       setIsLoading(true);
       const response = await eventHandlerApi.geEventById(eventId);
-      console.log("Response event detail :", response);
       setEvent(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -64,7 +63,6 @@ function DetailEvent() {
     }
   }
   function handleShowModal(): void {
-    console.log("click");
     setShowBookingModal(true);
   }
   function handleCloseModal(): void {
