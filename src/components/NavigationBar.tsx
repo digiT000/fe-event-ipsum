@@ -53,7 +53,17 @@ function NavigationBar({
       const response = await authHandler.validateUserToken(userToken);
       // Check if the response true
       if (response) {
-        userLogin(response);
+        userLogin({
+          name: response.name,
+          user_role: response.user_role,
+          refresh_token: response.refresh_token,
+          userReferralId: response.userReferralId,
+          points: response.points,
+          limit_use: response.user_referral.limit_use,
+          referral_code: response.user_referral.referral_code,
+          referral_use: response.referral_use,
+          total_use: response.user_referral.total_use,
+        });
       } else {
         userLogin(null);
       }
@@ -198,7 +208,14 @@ function NavigationBar({
             </div>
           </header>
           <div className="max-w-screen-xl mx-auto relative h-1 px-4">
-            {showMenu && <UserMenu userLogout={handleLogout} />}
+            {showMenu && (
+              <UserMenu
+                limitUse={user?.limit_use as number}
+                used={user?.total_use as number}
+                referralCode={user?.referral_code as string}
+                userLogout={handleLogout}
+              />
+            )}
           </div>
         </>
       );

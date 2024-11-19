@@ -233,29 +233,44 @@ function WaitingPaymentPage() {
                     {transaction.event_location}
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500 mb-3">Payment Method</p>
-                  <h2 className="font-bold text-gray-950 uppercase  lg:text-xl">
-                    {transaction.payment_method}
-                  </h2>
-                </div>
+                {transaction.payment_ammount === 0 ? (
+                  ""
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-500 mb-3">Payment Method</p>
+                    <h2 className="font-bold text-gray-950 uppercase  lg:text-xl">
+                      {transaction.payment_method}
+                    </h2>
+                  </div>
+                )}
               </div>
             </div>
             {/* <!-- Modal footer --> */}
             <div className="sm:flex sm:items-center sm:justify-between sm:gap-5 bg-indigo-50 p-5 rounded-md">
-              <div className="flex justify-between items-center mb-5 sm:flex-col sm:mb-0 ">
-                <p className="text-sm text-gray-700 mb-1 font-semibold">
-                  Payment Ammount
-                </p>
-                <h2 className="text-2xl font-bold">Rp {formattedNumber}</h2>
-              </div>
+              {transaction.payment_ammount === 0 ? (
+                <h2 className="text-2xl font-bold">FREE!</h2>
+              ) : (
+                <div className="flex justify-between items-center mb-5 sm:flex-col sm:mb-0 ">
+                  <p className="text-sm text-gray-700 mb-1 font-semibold">
+                    Payment Ammount
+                  </p>
+                  <h2 className="text-2xl font-bold">Rp {formattedNumber}</h2>
+                </div>
+              )}
+
               <div className="flex gap-4 items-center justify-between">
                 <p className="text-sm text-gray-700 font-semibold">
-                  Already Paid?
+                  {transaction.payment_ammount === 0
+                    ? "Are you join ?"
+                    : "Already Paid?"}
                 </p>
                 <Button
                   isButton={true}
-                  text="Confirm Payment"
+                  text={
+                    transaction.payment_ammount === 0
+                      ? "Confirm Join"
+                      : "Confirm Payment"
+                  }
                   type="primary"
                   width="w-fit"
                   isLoading={isLoading}

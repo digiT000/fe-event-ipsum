@@ -37,6 +37,9 @@ function DetailEvent() {
     event_location: "",
     is_active: false,
   });
+  const currentDate = new Date();
+  const eventStartDate = new Date(event.event_start_date);
+  const eventEndDate = new Date(event.event_end_date);
 
   const formatedEventStartDate = formatDate(
     event?.event_start_date.toLocaleString()
@@ -44,7 +47,6 @@ function DetailEvent() {
   const formatedEndStartDate = formatDate(
     event?.event_end_date.toLocaleString()
   );
-
   const formatNumberPrice = formatNumber(event.event_price);
   const formatDiscountPrice = formatNumber(event.discounted_price);
 
@@ -56,6 +58,82 @@ function DetailEvent() {
         {formatedEventStartDate} - {formatedEndStartDate}
       </p>
     );
+
+  const callToActionSection = () => {
+    if (currentDate < eventStartDate) {
+      return (
+        <div className="bg-indigo-600 p-4 rounded-md mb-5">
+          <div className="mb-4 flex justify-between items-center">
+            <p className="text-white text-2xl font-extrabold">
+              {event.is_paid ? (
+                event.is_active ? (
+                  <>
+                    {`Rp ${formatDiscountPrice}`}
+                    {"    "}
+                    <span className="text-red-200 text-sm line-through font-medium">{`Rp ${formatNumberPrice}`}</span>
+                  </>
+                ) : (
+                  `Rp ${formatNumberPrice}`
+                )
+              ) : (
+                "FREE!"
+              )}
+            </p>
+            <div className="p-2 bg-indigo-400 rounded-md w-fit ">
+              <span className="text-white text-sm font-semibold">
+                {event?.event_capacity} Seats available
+              </span>
+            </div>
+          </div>
+          {isLogin ? (
+            <Button
+              isButton={true}
+              onClick={handleShowModal}
+              width="w-full"
+              type="secondary"
+              text="Book Ticket"
+              isButtonDisable={false}
+            />
+          ) : (
+            <div className="mb-4">
+              <p className="text-white font-semibold mb-4 text-sm">
+                Before continue, let’s login to your account
+              </p>
+              <Button
+                isButton={false}
+                href="/auth/login"
+                width="w-full"
+                type="secondary"
+                text="Login"
+              />
+            </div>
+          )}
+        </div>
+      );
+    } else if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
+      return (
+        <div className="bg-indigo-600 p-4 rounded-md mb-5">
+          <div className="flex justify-between items-center">
+            <p className="text-white ">
+              We apologize, but registration for this event has closed. We hope
+              to see you at our next event!
+            </p>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="bg-indigo-600 p-4 rounded-md mb-5">
+          <div className="flex justify-between items-center">
+            <p className="text-white text ">
+              Want to know what happened at this event? Read the stories of
+              attendees.
+            </p>
+          </div>
+        </div>
+      );
+    }
+  };
 
   async function handleGetEventById(eventId: number): Promise<void> {
     try {
@@ -172,8 +250,8 @@ function DetailEvent() {
                   </p>
                 </div>
               </div>
-
-              <div className="bg-indigo-600 p-4 rounded-md mb-5">
+              {callToActionSection()}
+              {/* <div className="bg-indigo-600 p-4 rounded-md mb-5">
                 <div className="mb-4 flex justify-between items-center">
                   <p className="text-white text-2xl font-extrabold">
                     {event.is_paid ? (
@@ -219,7 +297,7 @@ function DetailEvent() {
                     />
                   </div>
                 )}
-              </div>
+              </div> */}
               <div>
                 <h3 className="text-lg font-bold mb-2">About this event</h3>
                 <p>{event?.event_description}</p>

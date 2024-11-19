@@ -139,8 +139,13 @@ function TransactionCard({
         <h3 className="text-lg font-bold text-gray-900 mb-1 md:text-xl md:mb-0">
           Rp {formettedNumber}
         </h3>
+
         <p className="text-sm font-semibold text-gray-500">
-          Paid with {paymentMethod}
+          {paymentMethod === "none"
+            ? "Its a free event"
+            : paymentMethod !== "none" && totalAmount === 0
+            ? "You paid this event using points"
+            : `Paid with ${paymentMethod}`}
         </p>
       </div>
       {buttonShown()}

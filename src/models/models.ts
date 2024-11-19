@@ -10,6 +10,9 @@ export interface UserProps {
   points: number;
   user_role: string;
   refresh_token: string;
+  limit_use: number;
+  total_use: number;
+  referral_code: string;
 }
 
 export interface CategoryProps {
@@ -62,6 +65,9 @@ export interface BookingData {
 export enum PaymentMethod {
   QRIS = "QRIS",
   BankBCA = "Bank BCA",
+  BankPermata = "Bank Permata",
+  BankBNI = "Bank BNI",
+  BankBRI = "Bank BRI",
   BCAVirtualAccount = "BCA Virtual Account",
 }
 
