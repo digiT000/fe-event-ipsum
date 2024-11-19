@@ -254,53 +254,6 @@ function DetailEvent() {
                 </div>
               </div>
               {callToActionSection()}
-              {/* <div className="bg-indigo-600 p-4 rounded-md mb-5">
-                <div className="mb-4 flex justify-between items-center">
-                  <p className="text-white text-2xl font-extrabold">
-                    {event.is_paid ? (
-                      event.is_active ? (
-                        <>
-                          {`Rp ${formatDiscountPrice}`}
-                          {"    "}
-                          <span className="text-red-200 text-sm line-through font-medium">{`Rp ${formatNumberPrice}`}</span>
-                        </>
-                      ) : (
-                        `Rp ${formatNumberPrice}`
-                      )
-                    ) : (
-                      "FREE!"
-                    )}
-                  </p>
-                  <div className="p-2 bg-indigo-400 rounded-md w-fit ">
-                    <span className="text-white text-sm font-semibold">
-                      {event?.event_capacity} Seats available
-                    </span>
-                  </div>
-                </div>
-                {isLogin ? (
-                  <Button
-                    isButton={true}
-                    onClick={handleShowModal}
-                    width="w-full"
-                    type="secondary"
-                    text="Book Ticket"
-                    isButtonDisable={false}
-                  />
-                ) : (
-                  <div className="mb-4">
-                    <p className="text-white font-semibold mb-4 text-sm">
-                      Before continue, let’s login to your account
-                    </p>
-                    <Button
-                      isButton={false}
-                      href="/auth/login"
-                      width="w-full"
-                      type="secondary"
-                      text="Login"
-                    />
-                  </div>
-                )}
-              </div> */}
               <div>
                 <h3 className="text-lg font-bold mb-2">About this event</h3>
                 <p>{event?.event_description}</p>
@@ -311,9 +264,9 @@ function DetailEvent() {
             <section className="max-w-screen-xl mx-auto ">
               <div className="bg-zinc-100 p-5 rounded-sm text-center">
                 <p className="text-gray-600 max-w-2xl mx-auto">
-                  Don't miss out on the insights! Join the event now and share
+                  {` Don't miss out on the insights! Join the event now and share
                   your thoughts with the community. After the event, you can
-                  explore the shared thoughts of others.
+                  explore the shared thoughts of others.`}
                 </p>
               </div>
             </section>
@@ -321,8 +274,8 @@ function DetailEvent() {
             <section className="max-w-screen-xl mx-auto ">
               <div className="bg-zinc-100 p-5 rounded-sm text-center">
                 <p className="text-gray-600 max-w-2xl mx-auto">
-                  Don't miss out on the insights! After the event, you can
-                  explore the shared thoughts of others.
+                  {` Don't miss out on the insights! After the event, you can
+                  explore the shared thoughts of others.`}
                 </p>
               </div>
             </section>
@@ -348,8 +301,8 @@ function DetailEvent() {
               ) : (
                 <div className="bg-zinc-100 p-5 rounded-sm text-center">
                   <p className="text-gray-600 max-w-2xl mx-auto">
-                    Don't miss out on the insights! you can explore the shared
-                    thoughts of others in here.
+                    {`Don't miss out on the insights! you can explore the shared
+                    thoughts of others in here.`}
                   </p>
                 </div>
               )}
