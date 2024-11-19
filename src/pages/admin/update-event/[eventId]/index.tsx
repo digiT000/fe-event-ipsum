@@ -118,7 +118,7 @@ function UpdateEvents() {
       }
       if (
         formData.discount_percentage === undefined ||
-        formData.discount_percentage <= 0
+        formData.discount_percentage < 0
       ) {
         Swal.fire({
           icon: "error",

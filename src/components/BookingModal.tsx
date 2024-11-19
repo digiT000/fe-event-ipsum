@@ -53,7 +53,7 @@ function BookingModal({
   discounted_price,
 }: BookingModalProps) {
   const router = useRouter();
-  const { user, decreseUserPoint } = useAuth();
+  const { decreseUserPoint } = useAuth();
   const bookingHandler = new BookingHandler();
   const [usePoint, setUsePoint] = useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | string>(
@@ -108,7 +108,7 @@ function BookingModal({
       <h2 className="text-xl font-bold w-full">{`Rp ${formattedPrice}`}</h2>
     )
   ) : (
-    <h2 className="text-xl font-bold w-full">"FREE!"</h2>
+    <h2 className="text-xl font-bold w-full">FREE!</h2>
   );
 
   const eventDate =
