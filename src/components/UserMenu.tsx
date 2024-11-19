@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { use, useState } from "react";
+import { useState } from "react";
 
 interface UserMenu {
   referralCode: string;
