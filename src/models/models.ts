@@ -38,7 +38,8 @@ export interface EventCardProps {
   category_name: string;
   event_start_date: string; // Tanggal dan waktu mulai acara
   event_end_date: string; // Tanggal dan waktu selesai acara
-  discounted_price?: number; // Harga diskon (opsional)
+  discounted_price: number; // Harga diskon (opsional)
+  is_active: boolean;
   is_online: boolean; // Apakah acara ini online
   is_paid: boolean; // Apakah acara ini bayar atau gratis
   event_description: string;

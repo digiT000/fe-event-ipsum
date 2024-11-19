@@ -91,6 +91,23 @@ function RegisterPage() {
             }, 1800);
             setIsLoading(false);
             setIsButtonDisabled(false);
+          } else {
+            setToast({
+              highlightText: "Failed to register user",
+              text: "Please try again",
+              type: "FAILED",
+              showToast: true,
+            });
+            setTimeout(() => {
+              setToast({
+                highlightText: "",
+                text: "",
+                type: "FAILED",
+                showToast: false,
+              });
+            }, 1500);
+            setIsLoading(false);
+            setIsButtonDisabled(false);
           }
         }
       })

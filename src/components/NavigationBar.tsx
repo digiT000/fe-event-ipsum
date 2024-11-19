@@ -122,7 +122,6 @@ function NavigationBar({
         className="cursor-pointer p-2 bg-[#f8f7f7] rounded-md flex gap-2 items-center hover:bg-zinc-100"
         onClick={() => {
           setShowMenu(!showMenu);
-          console.log("click");
         }}
       >
         <Image
@@ -166,7 +165,7 @@ function NavigationBar({
                   height={164}
                   //layout="responsive"
                   alt="main-logo"
-                  className="w-28 sm:w-36"
+                  className="w-56 sm:w-64"
                 />
               </Link>
 

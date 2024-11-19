@@ -11,6 +11,7 @@ import LoadingEventDetail from "./loading";
 import { formatDate } from "@/utils/formatter/formatDate";
 import BookingModal from "@/components/BookingModal";
 import Header from "@/components/Header";
+import { formatNumber } from "@/utils/formatter/formatNumber";
 
 function DetailEvent() {
   const { isLogin, user } = useAuth();
@@ -34,6 +35,7 @@ function DetailEvent() {
     event_start_date: "",
     discounted_price: 0,
     event_location: "",
+    is_active: false,
   });
 
   const formatedEventStartDate = formatDate(
@@ -42,6 +44,9 @@ function DetailEvent() {
   const formatedEndStartDate = formatDate(
     event?.event_end_date.toLocaleString()
   );
+
+  const formatNumberPrice = formatNumber(event.event_price);
+  const formatDiscountPrice = formatNumber(event.discounted_price);
 
   const eventDate =
     formatedEventStartDate === formatedEndStartDate ? (
@@ -100,6 +105,8 @@ function DetailEvent() {
           end_date={formatedEndStartDate}
           start_date={formatedEventStartDate}
           isPaid={event.is_paid}
+          discounted_price={event.discounted_price}
+          is_active={event.is_active}
         />
       ) : (
         ""
@@ -169,7 +176,19 @@ function DetailEvent() {
               <div className="bg-indigo-600 p-4 rounded-md mb-5">
                 <div className="mb-4 flex justify-between items-center">
                   <p className="text-white text-2xl font-extrabold">
-                    Rp {event?.is_paid ? event.event_price : "FREE "}
+                    {event.is_paid ? (
+                      event.is_active ? (
+                        <>
+                          {`Rp ${formatDiscountPrice}`}
+                          {"    "}
+                          <span className="text-red-200 text-sm line-through font-medium">{`Rp ${formatNumberPrice}`}</span>
+                        </>
+                      ) : (
+                        `Rp ${formatNumberPrice}`
+                      )
+                    ) : (
+                      "FREE!"
+                    )}
                   </p>
                   <div className="p-2 bg-indigo-400 rounded-md w-fit ">
                     <span className="text-white text-sm font-semibold">
@@ -193,7 +212,7 @@ function DetailEvent() {
                     </p>
                     <Button
                       isButton={false}
-                      href="http://localhost:3000/auth/login"
+                      href="/auth/login"
                       width="w-full"
                       type="secondary"
                       text="Login"

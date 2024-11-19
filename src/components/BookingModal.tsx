@@ -34,6 +34,8 @@ interface BookingModalProps {
   closeModal: () => void;
   isShow: boolean;
   isPaid: boolean;
+  is_active: boolean;
+  discounted_price: number;
 }
 
 function BookingModal({
@@ -47,6 +49,8 @@ function BookingModal({
   end_date,
   isShow,
   isPaid,
+  is_active,
+  discounted_price,
 }: BookingModalProps) {
   const router = useRouter();
   const { user, decreseUserPoint } = useAuth();
@@ -83,7 +87,30 @@ function BookingModal({
     },
   };
 
-  const formattedPrice = formatNumber(event_price);
+  const formattedPrice = formatNumber(
+    usePoint
+      ? event_price - user_points < 0
+        ? 0
+        : event_price - user_points
+      : event_price
+  );
+  const formatDiscountPrice = formatNumber(
+    usePoint
+      ? discounted_price - user_points < 0
+        ? 0
+        : discounted_price - user_points
+      : discounted_price
+  );
+  const priceFE = isPaid ? (
+    is_active ? (
+      <h2 className="text-xl font-bold w-full">{`Rp ${formatDiscountPrice}`}</h2>
+    ) : (
+      <h2 className="text-xl font-bold w-full">{`Rp ${formattedPrice}`}</h2>
+    )
+  ) : (
+    <h2 className="text-xl font-bold w-full">"FREE!"</h2>
+  );
+
   const eventDate =
     start_date === end_date ? (
       <p className=" text-sm text-gray-900 ">{start_date}</p>
@@ -95,9 +122,17 @@ function BookingModal({
 
   // handle booking process
   async function handleBooking() {
+    let finalPoint = user_points;
+
+    if (usePoint) {
+      if (user_points > (is_active ? discounted_price : event_price)) {
+        finalPoint = is_active ? discounted_price : event_price;
+      }
+    }
+
     const bookingData: BookingData = {
       event_id: event_id,
-      usePoint: usePoint ? user_points : 0,
+      usePoint: usePoint ? Math.abs(finalPoint) : 0,
       payment_method: paymentMethod as PaymentMethod,
       is_paid: isPaid,
     };
@@ -107,12 +142,11 @@ function BookingModal({
         bookingData,
         token as string
       );
-      console.log(bookingResult);
       if (bookingResult.status === 201 || bookingResult.status === 200) {
         // handle success booking
         if (isPaid) {
           if (usePoint) {
-            decreseUserPoint(user?.points as number);
+            decreseUserPoint(finalPoint as number);
           }
           setToast({
             highlightText: "Booking successful!, ",
@@ -129,7 +163,9 @@ function BookingModal({
           setIsLoading(false);
           setShowModal(true);
         }
-      } else if (bookingResult.errorCode === BookingServiceCode.NAQuoata) {
+      } else if (
+        bookingResult.response.data.errorCode === BookingServiceCode.NAQuoata
+      ) {
         // handle failed booking
         setToast({
           highlightText: "Event is already full, ",
@@ -147,7 +183,8 @@ function BookingModal({
         }, 2000);
         setIsLoading(false);
       } else if (
-        bookingResult.errorCode === BookingServiceCode.RegistarationClose
+        bookingResult.response.data.errorCode ===
+        BookingServiceCode.RegistarationClose
       ) {
         setToast({
           highlightText: "Event is already closed, ",
@@ -165,7 +202,8 @@ function BookingModal({
         }, 2000);
         setIsLoading(false);
       } else if (
-        bookingResult.errorCode === BookingServiceCode.WaitingForPayment
+        bookingResult.response.data.errorCode ===
+        BookingServiceCode.WaitingForPayment
       ) {
         setToast({
           highlightText: "You already Book this event, ",
@@ -198,7 +236,6 @@ function BookingModal({
   // USE EFFECT FOR MODAL
   useEffect(() => {
     if (showModal) {
-      console.log("exec");
       setTimeout(() => {
         setShowDelayedModal(showModal);
       }, 10); // Adjust the delay as needed
@@ -360,16 +397,7 @@ function BookingModal({
             </div>
             {/* <!-- Modal footer --> */}
             <div className="flex items-center gap-5 p-4 border-t border-t-gray-200">
-              {isPaid ? (
-                <h2 className="text-2xl w-full font-bold">
-                  Rp{" "}
-                  {usePoint
-                    ? formatNumber(event_price - user_points)
-                    : formattedPrice}
-                </h2>
-              ) : (
-                <h2 className="text-2xl w-full font-bold">ITS FREE</h2>
-              )}
+              {priceFE}
 
               <Button
                 isButton={true}

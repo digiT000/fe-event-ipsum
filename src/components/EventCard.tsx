@@ -11,13 +11,16 @@ function EventCard({
   event_end_date,
   is_paid,
   event_price,
+  discounted_price,
   event_image,
+  is_active,
   onClick,
 }: EventCardProps) {
   // FORMATTER
   const formatedEventStartDate = formatDate(event_start_date.toLocaleString());
   const formatedEndStartDate = formatDate(event_end_date.toLocaleString());
-  const formattedNumber = formatNumber(event_price);
+  const formatNumberPrice = formatNumber(event_price);
+  const formatDiscountPrice = formatNumber(discounted_price);
 
   const eventDate =
     formatedEventStartDate === formatedEndStartDate ? (
@@ -65,7 +68,19 @@ function EventCard({
           <h3
             className={`text-lg font-bold ${is_paid ? "" : "text-green-600"}`}
           >
-            {is_paid ? `Rp ${formattedNumber}` : "FREE!"}
+            {is_paid ? (
+              is_active ? (
+                <>
+                  {`Rp ${formatDiscountPrice}`}
+                  {"    "}
+                  <span className="text-red-600 text-sm line-through font-medium">{`Rp ${formatNumberPrice}`}</span>
+                </>
+              ) : (
+                `Rp ${formatNumberPrice}`
+              )
+            ) : (
+              "FREE!"
+            )}
           </h3>
         </div>
       </div>

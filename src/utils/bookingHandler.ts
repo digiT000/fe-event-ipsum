@@ -14,7 +14,7 @@ export class BookingHandler {
         }
       );
       return response.data;
-    } catch (error) {
+    } catch (error: unknown) {
       return error;
     }
   }

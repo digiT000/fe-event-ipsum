@@ -42,6 +42,8 @@ function EventList({
               is_online={event.is_online}
               is_paid={event.is_paid}
               event_location={event.event_location}
+              discounted_price={event.discounted_price}
+              is_active={event.is_active}
               onClick={() => {
                 redirectToDetail(event.event_id as number);
               }}
