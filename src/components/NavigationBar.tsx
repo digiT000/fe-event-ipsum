@@ -165,7 +165,7 @@ function NavigationBar({
                   height={164}
                   //layout="responsive"
                   alt="main-logo"
-                  className="w-56 sm:w-64"
+                  className="w-32 sm:w-44"
                 />
               </Link>
 
