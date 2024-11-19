@@ -126,3 +126,15 @@ export interface TransactionHistoryResp {
   status_order: BookingStatus;
   payment_method: string;
 }
+
+export interface ReviewResponse {
+  review_id: number;
+  userId: number;
+  eventId: number;
+  review_content: string;
+  review_rating: number;
+  created_at: Date;
+  User: {
+    name: string;
+  };
+}

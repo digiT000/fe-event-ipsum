@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { EventCardProps } from "@/models/models";
+import { EventCardProps, ReviewResponse } from "@/models/models";
 import { useEffect, useState } from "react";
 import { EventHandlerApi } from "@/utils/eventHandler";
 import Image from "next/image";
@@ -12,6 +12,7 @@ import { formatDate } from "@/utils/formatter/formatDate";
 import BookingModal from "@/components/BookingModal";
 import Header from "@/components/Header";
 import { formatNumber } from "@/utils/formatter/formatNumber";
+import ReviewCard from "@/components/ReviewCard";
 
 function DetailEvent() {
   const { isLogin, user } = useAuth();
@@ -37,6 +38,7 @@ function DetailEvent() {
     event_location: "",
     is_active: false,
   });
+  const [review, setReview] = useState<ReviewResponse[]>([]);
   const currentDate = new Date();
   const eventStartDate = new Date(event.event_start_date);
   const eventEndDate = new Date(event.event_end_date);
@@ -140,6 +142,7 @@ function DetailEvent() {
       setIsLoading(true);
       const response = await eventHandlerApi.geEventById(eventId);
       setEvent(response.data);
+      setReview(response.data.Review);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -200,7 +203,7 @@ function DetailEvent() {
         <LoadingEventDetail />
       ) : (
         <div className="px-3 py-5 md:py-10 ">
-          <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0">
+          <section className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0 mb-16 sm:mb-24">
             <Image
               alt={event?.event_name as string | `/mainLogo.png`}
               src={event?.event_image as string}
@@ -303,7 +306,55 @@ function DetailEvent() {
                 <p>{event?.event_description}</p>
               </div>
             </div>
-          </div>
+          </section>
+          {currentDate < eventStartDate ? (
+            <section className="max-w-screen-xl mx-auto ">
+              <div className="bg-zinc-100 p-5 rounded-sm text-center">
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Don't miss out on the insights! Join the event now and share
+                  your thoughts with the community. After the event, you can
+                  explore the shared thoughts of others.
+                </p>
+              </div>
+            </section>
+          ) : currentDate >= eventStartDate && currentDate <= eventEndDate ? (
+            <section className="max-w-screen-xl mx-auto ">
+              <div className="bg-zinc-100 p-5 rounded-sm text-center">
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  Don't miss out on the insights! After the event, you can
+                  explore the shared thoughts of others.
+                </p>
+              </div>
+            </section>
+          ) : (
+            <section className="max-w-screen-xl mx-auto  ">
+              {review.length !== 0 ? (
+                <>
+                  <h2 className="text-lg font-bold mb-4">
+                    Their thought about the events
+                  </h2>
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    {review.map((review: ReviewResponse, index: number) => {
+                      return (
+                        <ReviewCard
+                          key={index}
+                          name={review.User.name}
+                          reviewText={review.review_content}
+                        />
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <div className="bg-zinc-100 p-5 rounded-sm text-center">
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    Don't miss out on the insights! you can explore the shared
+                    thoughts of others in here.
+                  </p>
+                </div>
+              )}
+            </section>
+          )}
         </div>
       )}
     </>

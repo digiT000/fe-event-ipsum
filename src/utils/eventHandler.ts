@@ -32,6 +32,7 @@ export class EventHandlerApi {
   async geEventById(eventId: number) {
     try {
       const response = await axios.get(`/api/users/events/${eventId}`);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return {
