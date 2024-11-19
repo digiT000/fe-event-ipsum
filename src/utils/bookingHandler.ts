@@ -33,7 +33,7 @@ export class BookingHandler {
   async cancelBooking(transactionId: number, token: string) {
     try {
       const response = await axios.put(
-        `/api/bookings//update-status/cancel/${transactionId}`,
+        `/api/bookings/update-status/cancel/${transactionId}`,
         {},
         {
           headers: {
